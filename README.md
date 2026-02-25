@@ -4,6 +4,14 @@ Ein radikaler Bruch mit der klassischen Dämpfungsphysik. Maximierung der System
 
 ---
 
+## 📄 Gesamtdokument als PDF
+
+> **[⬇️ Energie-Revolution-8911.pdf herunterladen](./Energie-Revolution-8911.pdf)**
+>
+> Das PDF enthält alle Kapitel (Abstract, Beschreibung, Beweisführung, Vergleich, Vorhersage, README und Lizenz) in einem verlinkten Dokument.
+
+---
+
 ## 📖 Schnelleinstieg
 
 Stell dir vor: Du versuchst, ein **rundes Loch mit einem eckigen Baustein zu füllen**. Es passt nicht, es knirscht und es entsteht Hitze durch Reibung.
