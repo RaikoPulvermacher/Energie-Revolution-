@@ -4,6 +4,7 @@
 import re
 import markdown
 import weasyprint
+import latex2mathml.converter
 
 REPO_URL = "https://github.com/RaikoPulvermacher/Energie-Revolution-/blob/main"
 ZENODO_URL = "https://doi.org/10.5281/zenodo.18757232"
@@ -14,7 +15,45 @@ def read(filename):
         return fh.read()
 
 
+def latex_to_mathml(latex, display=False):
+    """Convert a LaTeX expression to a MathML element."""
+    display_val = "block" if display else "inline"
+    try:
+        mml = latex2mathml.converter.convert(latex)
+        # latex2mathml always emits display="inline"; overwrite it with the
+        # correct value.  count=1 targets only the root <math> attribute.
+        mml = re.sub(r'\bdisplay="[^"]*"', f'display="{display_val}"', mml, count=1)
+        if display:
+            return f'<div class="math-block">{mml}</div>'
+        return mml
+    except Exception:
+        # Fall back to monospace if conversion fails
+        tag = "div" if display else "span"
+        cls = "math-block" if display else "math-inline"
+        return f'<{tag} class="{cls}"><code>{latex}</code></{tag}>'
+
+
+def replace_math(text):
+    """Replace $$...$$ and $...$ with MathML before Markdown processing."""
+    # Block math ($$...$$) – must be processed first to avoid matching
+    # the inner $ signs as inline math.
+    text = re.sub(
+        r"\$\$([^$]+?)\$\$",
+        lambda m: latex_to_mathml(m.group(1).strip(), display=True),
+        text,
+        flags=re.DOTALL,
+    )
+    # Inline math ($...$) – no $ signs allowed inside
+    text = re.sub(
+        r"\$([^$\n]+?)\$",
+        lambda m: latex_to_mathml(m.group(1).strip(), display=False),
+        text,
+    )
+    return text
+
+
 def md_to_html(text):
+    text = replace_math(text)
     return markdown.markdown(
         text,
         extensions=["tables", "fenced_code", "toc", "nl2br"],
@@ -72,6 +111,15 @@ HTML = f"""<!DOCTYPE html>
     h1, h2, h3, h4 {{
       font-family: "DejaVu Sans", Arial, sans-serif;
       color: #0d3b66;
+      /* keep heading on the same page as the content that follows it */
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }}
+    p {{
+      orphans: 3;
+      widows: 3;
+      margin-top: 4pt;
+      margin-bottom: 4pt;
     }}
     a {{
       color: #1565c0;
@@ -108,6 +156,7 @@ HTML = f"""<!DOCTYPE html>
       padding: 8pt 14pt;
       background: #f0f4fb;
       margin: 12pt 0 18pt 0;
+      page-break-inside: avoid;
     }}
     .abstract-box h2 {{
       font-size: 12pt;
@@ -148,11 +197,13 @@ HTML = f"""<!DOCTYPE html>
       border-bottom: 2px solid #0d3b66;
       padding-bottom: 4pt;
     }}
+    /* ── tables: never split across pages ── */
     table {{
       border-collapse: collapse;
       width: 100%;
       margin: 10pt 0;
       font-size: 9.5pt;
+      page-break-inside: avoid;
     }}
     th, td {{
       border: 1px solid #aaa;
@@ -162,6 +213,15 @@ HTML = f"""<!DOCTYPE html>
     th {{
       background: #dbe7f5;
       font-weight: bold;
+    }}
+    /* ── code blocks: never split across pages ── */
+    pre {{
+      page-break-inside: avoid;
+      background: #f5f5f5;
+      padding: 6pt 8pt;
+      border-radius: 2pt;
+      font-size: 9pt;
+      overflow-wrap: break-word;
     }}
     code {{
       font-family: "DejaVu Sans Mono", monospace;
@@ -176,9 +236,31 @@ HTML = f"""<!DOCTYPE html>
     }}
     blockquote {{
       border-left: 3px solid #ccc;
-      margin: 0;
+      margin: 0 0 6pt 0;
       padding-left: 12pt;
       color: #555;
+      page-break-inside: avoid;
+    }}
+    /* ── list items: keep each item intact ── */
+    li {{
+      page-break-inside: avoid;
+      orphans: 3;
+      widows: 3;
+    }}
+    /* ── math formulas ── */
+    .math-block {{
+      display: block;
+      text-align: center;
+      margin: 10pt 0;
+      page-break-inside: avoid;
+    }}
+    .math-inline {{
+      display: inline;
+    }}
+    math[display="block"] {{
+      display: block;
+      text-align: center;
+      margin: 10pt 0;
     }}
   </style>
 </head>
