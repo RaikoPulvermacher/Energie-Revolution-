@@ -24,29 +24,9 @@ Genau das macht die moderne Physik mit unserem Strom.
 
 ## 📚 Was ist in diesem Projekt?
 
-### 1. **[Vorhersage.md](./Vorhersage.md)** – START HIER
-   Die Kernthese: Widerstand ist kein Naturgesetz, sondern ein **Phasenfehler** zwischen alter Mathematik (Euler) und diskreter Realität (Quantenmechanik).
-   - LED-Effizienz erklärt
-   - ITER-Plasma-Instabilität erklärt
-   - Die 89/11-Lösung
+Das vollständige Dokument (Abstract, Spezifikation, Beweise, Vorhersage und Lizenz) befindet sich im **[⬇️ PDF](./Energie-Revolution-8911.pdf)**. Die Datei `generate_pdf.py` enthält den gesamten Inhalt und kann das PDF neu erzeugen.
 
-### 2. **[Beschreibung.md](./Beschreibung.md)**
-   Allgemeine Einführung und Kontextbeschreibung des Projekts.
-
-### 3. **[Beweisführung_8911.md](./Beweisführung_8911.md)**
-   Der mathematische Kern: Wie die Fibonacci-Kette die 11-stufige Sättigung erzeugt.
-   - Die 52%-Anomalie erklärt
-   - Die additive Kette der Natur
-   - Warum Euler falsch ist
-
-### 4. **[Beweis_Vergleich_Anomalien.md](./Beweis_Vergleich_Anomalien.md)**
-   Praktische Evidenz aus der realen Welt:
-   - LED Droop Effect (dokumentiert)
-   - ITER Plasma ELMs (Milliardenbudget vs. Fehlkalkulation)
-   - Stromnetz-Verluste
-
-### 5. **[LICENSE](./LICENSE)** – PORL v1.0
-   Die Pulvermacher Open Research License – deine Lizenz, deine Kontrolle.
+**[LICENSE](./LICENSE)** – PORL v1.0: Die Pulvermacher Open Research License – deine Lizenz, deine Kontrolle.
 
 ---
 
@@ -103,10 +83,8 @@ Dieses Projekt steht unter der **Pulvermacher Open Research License (PORL) v1.0*
 
 ## 🚀 Nächste Schritte
 
-1. **Lies zuerst:** [Vorhersage.md](./Vorhersage.md)
-2. **Verstehe die Mathematik:** [Beweisführung_8911.md](./Beweisführung_8911.md)
-3. **Sieh die Evidenz:** [Beweis_Vergleich_Anomalien.md](./Beweis_Vergleich_Anomalien.md)
-4. **Trag bei:** Öffne ein Issue oder eine Discussion mit deinen Messungen/Erkenntnissen
+1. **Lies das Dokument:** [Energie-Revolution-8911.pdf](./Energie-Revolution-8911.pdf)
+2. **Trag bei:** Öffne ein Issue oder eine Discussion mit deinen Messungen/Erkenntnissen
 
 ---
 
